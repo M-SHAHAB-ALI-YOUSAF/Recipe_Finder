@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">Recipe Finder</string>
+    <string name="Slogan">Discover all the best \n recipes you needed</string>
+    <string name="getstart">Get Started</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_saved">Saved</string>
+    <string name="menu_battery">Battery</string>
+    <string name="menu_logout">Logout</string>
+
+    <string name="Signin">Sign In</string>
+    <string name="google">Continue with Google</string>
+    <string name="fb">Continue with Facebook</string>
+    <string name="facebook_app_id">513723088299977</string>
+    <string name="fb_login_protocol_scheme">fb513723088299977</string>
+    <string name="facebook_client_token">1b30d880ba3b848da1be9893d8fced38</string>
+    <string name="cuisine">Cuisine</string>
+    <string name="food">Food Name</string>
+    <string name="ingredient">Ingredients</string>
+    <string name="items">Ingredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \n</string>
+    <string name="amount">Ingredient Amount</string>
+    <string name="step">Cooking Steps</string>
+    <string name="Steps">Step 1\nStep 2\nStep 3\nStep 4\nStep 5\nStep 6\nStep 7\nStep 9\nStep 10</string>
+    <string name="default_web_client_id">857228908716-cc9ribl2qrl89c8qkkgqllq0ii487rln.apps.googleusercontent.com</string>
+    <string name="no_recipes_found">No recipes found</string>
+
+    <string name="battery_information">Battery Information</string>
+    <string name="_50">50%</string>
+    <string name="_5">5</string>
+    <string name="technology">Technology</string>
+
+    <string name="battery_percentage">%d%%</string>
+    <string name="voltage_value">Voltage: %d mV</string>
+    <string name="temperature_value">Temperature: %.1f °C</string>
+    <string name="battery_status">Battery Status</string>
+    <string name="plug_state">Plug State</string>
+    <string name="voltage">Voltage</string>
+    <string name="temperature">Temperature</string>
+    <string name="your_information">Your Information</string>
+    <string name="username">Ahmed Khan</string>
+    <string name="email">Email123@gmail.com</string>
+    <string name="userprofile">Profile</string>
+
+</resources>
