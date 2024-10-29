@@ -36,4 +36,22 @@ class ShowDishDetailViewModel(private val repository: DishRepository) : ViewMode
         }
     }
 
+    suspend fun isDishSavedinShopping(dishId: Long): Boolean {
+        return withContext(Dispatchers.IO) {
+            repository.isDishinShoppinglist(dishId)
+        }
+    }
+
+
+    suspend fun getIngredients(dishId: Int): List<IngredientEntity> {
+        return repository.getIngredientsForDish(dishId)
+    }
+
+    fun saveIngredientsToShoppingList(ingredients: List<IngredientEntity>, dishId: Int) {
+        viewModelScope.launch {
+            repository.saveIngredientsToShoppingList(ingredients, dishId)
+        }
+    }
+
+
 }

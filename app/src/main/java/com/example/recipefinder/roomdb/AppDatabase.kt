@@ -6,13 +6,16 @@ import androidx.room.RoomDatabase
 import android.content.Context
 import com.example.recipefinder.roomdb.favorite.SavedDishDao
 import com.example.recipefinder.roomdb.favorite.SavedDishEntity
+import com.example.recipefinder.roomdb.shopping.ShoppingListDao
+import com.example.recipefinder.roomdb.shopping.ShoppingListItem
 
-@Database(entities = [Dish::class, IngredientEntity::class, CookingStepEntity::class, SavedDishEntity::class], version = 3, exportSchema = false)
+@Database(entities = [Dish::class, IngredientEntity::class, CookingStepEntity::class, SavedDishEntity::class, ShoppingListItem::class], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun dishDao(): DishDao
     abstract fun ingredientDao(): IngredientDao
     abstract fun cookingStepDao(): CookingStepDao
     abstract fun savedDishDao(): SavedDishDao
+    abstract fun shoppingListDao(): ShoppingListDao
 
     companion object {
         @Volatile

@@ -1,7 +1,6 @@
 package com.example.recipefinder.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,16 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.recipefinder.R
-import com.example.recipefinder.adaptor.DishAdapter
 import com.example.recipefinder.adaptor.DishRepository
 import com.example.recipefinder.adaptor.GridAdapter
 import com.example.recipefinder.databinding.FragmentHomeBinding
 import com.example.recipefinder.roomdb.AppDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class HomeFragment : Fragment() {
 
@@ -39,61 +33,62 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        // Initialize database and ViewModel
         val dishDao = AppDatabase.getDatabase(requireContext()).dishDao()
         val ingredientDao = AppDatabase.getDatabase(requireContext()).ingredientDao()
         val cookingStepDao = AppDatabase.getDatabase(requireContext()).cookingStepDao()
         val savedDishDao = AppDatabase.getDatabase(requireContext()).savedDishDao()
+        val shoppingListDao = AppDatabase.getDatabase(requireContext()).shoppingListDao()
 
-        val repository = DishRepository(dishDao, ingredientDao, cookingStepDao, savedDishDao)
+        val repository = DishRepository(dishDao, ingredientDao, cookingStepDao, savedDishDao, shoppingListDao)
         homeViewModel = ViewModelProvider(this, HomeViewModelFactory(repository)).get(HomeViewModel::class.java)
+
+        // Set up UI elements
         val drawerImage = requireActivity().findViewById<ImageView>(R.id.drawer_image)
         val fragmentNameTextView = requireActivity().findViewById<TextView>(R.id.fragment_name_text_view)
-
         drawerImage?.visibility = View.VISIBLE
         fragmentNameTextView?.visibility = View.VISIBLE
+
         setupImageSlider()
+
         val cuisines = listOf("Italian", "Mexican", "Indian")
         fetchDishesAndIngredients(cuisines)
+
+        homeViewModel.dishesFetchCompleted.observe(viewLifecycleOwner) { isCompleted ->
+            if (isCompleted) {
+                coroutineScope.launch {
+                    withContext(Dispatchers.IO) {
+                        homeViewModel.fetchAndSaveIngredientsAndSteps()
+                    }
+                    displayDishes()
+                }
+            }
+        }
+
         return binding.root
     }
 
     private fun setupImageSlider() {
         val imageSlider = binding.imageSlider
-        val imageList = ArrayList<SlideModel>()
-
-        imageList.add(SlideModel(R.drawable.img_4))
-        imageList.add(SlideModel(R.drawable.img_2))
-        imageList.add(SlideModel(R.drawable.img_3))
-        imageList.add(SlideModel(R.drawable.img_8))
-        imageList.add(SlideModel(R.drawable.img_7))
+        val imageList = arrayListOf(
+            SlideModel(R.drawable.img_4),
+            SlideModel(R.drawable.img_2),
+            SlideModel(R.drawable.img_3),
+            SlideModel(R.drawable.img_8),
+            SlideModel(R.drawable.img_7)
+        )
         imageSlider.setImageList(imageList, ScaleTypes.FIT)
     }
 
-//    private fun fetchDishesAndIngredients(cuisines: List<String>) {
-//        coroutineScope.launch {
-//            val dishCount = withContext(Dispatchers.IO) {
-//                homeViewModel.getDishCount()
-//            }
-//            if (dishCount == 0) {
-//                withContext(Dispatchers.IO) {
-//                    homeViewModel.fetchAndSaveDishes(cuisines)
-//                }
-//
-//                withContext(Dispatchers.IO) {
-//                    homeViewModel.fetchAndSaveIngredientsAndSteps()
-//                }
-//            }
-//            displayDishes()
-//        }
-//    }
-
     private fun fetchDishesAndIngredients(cuisines: List<String>) {
-        coroutineScope.launch {
-            withContext(Dispatchers.IO) {
-                homeViewModel.fetchAndSaveDishes(cuisines) // Fetch and save dishes first
-                homeViewModel.fetchAndSaveIngredientsAndSteps() // Then fetch and save ingredients and steps
+        coroutineScope.launch(Dispatchers.IO) {
+            val dishCount = homeViewModel.getDishCount()
+            if (dishCount == 0) {
+                homeViewModel.fetchAndSaveDishes(cuisines)
             }
-            displayDishes()
+            withContext(Dispatchers.Main) {
+                displayDishes()
+            }
         }
     }
 
@@ -118,6 +113,3 @@ class HomeFragment : Fragment() {
         job.cancel()
     }
 }
-
-
-

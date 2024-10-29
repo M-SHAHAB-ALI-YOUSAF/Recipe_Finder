@@ -18,4 +18,7 @@ interface DishDao {
 
     @Query("SELECT * FROM dishes")
     suspend fun getAllDishes(): List<Dish>
+
+    @Query("SELECT * FROM dishes WHERE id IN (:ids)")
+    suspend fun getDishesByIds(ids: List<Long>): List<Dish>
 }

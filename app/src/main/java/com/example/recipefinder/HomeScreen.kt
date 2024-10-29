@@ -46,7 +46,7 @@ class HomeScreen : AppCompatActivity() {
         }
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_home,R.id.nav_User, R.id.nav_gallery, R.id.nav_battery, R.id.nav_logout), drawerLayout
+            setOf(R.id.nav_home,R.id.nav_User, R.id.nav_gallery, R.id.nav_shopping, R.id.nav_battery, R.id.nav_logout), drawerLayout
         )
 
         navView.setupWithNavController(navController)
@@ -55,7 +55,7 @@ class HomeScreen : AppCompatActivity() {
         }
 
         navView.setNavigationItemSelectedListener { menuItem ->
-            // Handle the logout click
+
             if (menuItem.itemId == R.id.nav_logout) {
                 signOutUser()
                 drawerLayout.close() // Close drawer after selecting item

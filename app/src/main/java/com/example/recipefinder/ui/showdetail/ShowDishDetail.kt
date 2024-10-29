@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.recipefinder.R
@@ -29,8 +30,6 @@ class ShowDishDetail : Fragment() {
 
     private var _binding: FragmentShowDishDetailBinding? = null
     private val binding get() = _binding!!
-
-// ShowDishDetail.kt
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,19 +57,23 @@ class ShowDishDetail : Fragment() {
         val ingredientDao = AppDatabase.getDatabase(requireContext()).ingredientDao()
         val cookingStepDao = AppDatabase.getDatabase(requireContext()).cookingStepDao()
         val savedDishDao = AppDatabase.getDatabase(requireContext()).savedDishDao()
+        val shoppingListDao = AppDatabase.getDatabase(requireContext()).shoppingListDao()
+
 
         if (dishId != null) {
             val viewModel =
-                ShowDishDetailViewModel(DishRepository(dishDao, ingredientDao, cookingStepDao, savedDishDao))
+                ShowDishDetailViewModel(DishRepository(dishDao, ingredientDao, cookingStepDao, savedDishDao, shoppingListDao))
 
             viewLifecycleOwner.lifecycleScope.launch {
                 val isSaved = withContext(Dispatchers.IO) {
                     viewModel.isDishSaved(dishId!!)
                 }
+                val isShopping= withContext(Dispatchers.IO) {
+                    viewModel.isDishSavedinShopping(dishId!!)
+                }
                 if (isSaved) {
                     binding.addToFavorite.setImageResource(R.drawable.heart)
                 }
-
 
                 binding.addToFavorite.setOnClickListener {
                     if (!isSaved) {
@@ -80,6 +83,23 @@ class ShowDishDetail : Fragment() {
                         }
                     }
                 }
+
+                binding.addToShop.setOnClickListener {
+                    if(!isShopping){
+                    dishId?.let { id ->
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            val ingredients = viewModel.getIngredients(id.toInt())
+                            viewModel.saveIngredientsToShoppingList(ingredients, id.toInt())
+                            Toast.makeText(requireContext(), "Ingredients added to shopping list!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    }
+                    else{
+                        Toast.makeText(requireContext(), "Ingredients already in shopping list!", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
             }
 
             viewModel.fetchIngredients(dishId!!.toInt()) { ingredients ->
@@ -89,6 +109,7 @@ class ShowDishDetail : Fragment() {
                 displayCookingSteps(steps)
             }
         }
+
 
         return view
     }

@@ -10,6 +10,8 @@ import com.example.recipefinder.roomdb.CookingStepDao
 import com.example.recipefinder.roomdb.CookingStepEntity
 import com.example.recipefinder.roomdb.favorite.SavedDishDao
 import com.example.recipefinder.roomdb.favorite.SavedDishEntity
+import com.example.recipefinder.roomdb.shopping.ShoppingListDao
+import com.example.recipefinder.roomdb.shopping.ShoppingListItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -17,9 +19,10 @@ class DishRepository(
     private val dishDao: DishDao,
     private val ingredientDao: IngredientDao,
     private val cookingStepDao: CookingStepDao,
-    private val savedDishDao: SavedDishDao
+    private val savedDishDao: SavedDishDao,
+    private val shoppingListDao: ShoppingListDao
 ) {
-    private val apiKey = "3136a7cec7e940039b7a8f4253d6e406"
+    private val apiKey = "ec5a10a226264cc2b0948396fa0add1b"
 
     suspend fun fetchDishes(cuisines: List<String>) {
         val dishes = mutableListOf<Dish>()
@@ -43,41 +46,52 @@ class DishRepository(
         }
 
         for (dishId in dishIds) {
-            Log.d("DishRepository", "Fetched ingredients and steps for dishId: $dishId")
-            val response = withContext(Dispatchers.IO) {
-                RetrofitClient.spoonacularService.getRecipeInformation(dishId, apiKey)
+            val ingredientsExist = withContext(Dispatchers.IO) {
+                ingredientDao.getIngredientsForDish(dishId).isNotEmpty()
+            }
+            val stepsExist = withContext(Dispatchers.IO) {
+                cookingStepDao.getCookingStepsForDish(dishId).isNotEmpty()
             }
 
-            val ingredients = response.extendedIngredients.map { ingredient ->
-                IngredientEntity(
-                    dishId = response.id,
-                    name = ingredient.name,
-                    amount = ingredient.amount,
-                    unit = ingredient.unit
-                )
-            }
-
-
-            withContext(Dispatchers.IO) {
-                ingredientDao.insertIngredients(ingredients)
-            }
-
-            val steps = response.analyzedInstructions.flatMap { instruction ->
-                instruction.steps.map { step ->
-                    CookingStepEntity(
-                        dishId = response.id,
-                        stepNumber = step.number,
-                        description = step.step
-                    )
+            if (!ingredientsExist || !stepsExist) {
+                val response = withContext(Dispatchers.IO) {
+                    RetrofitClient.spoonacularService.getRecipeInformation(dishId, apiKey)
                 }
-            }
 
-            // Insert cooking steps in IO context
-            withContext(Dispatchers.IO) {
-                cookingStepDao.insertCookingSteps(steps)
+                if (!ingredientsExist) {
+                    val ingredients = response.extendedIngredients.map { ingredient ->
+                        IngredientEntity(
+                            dishId = response.id,
+                            name = ingredient.name,
+                            amount = ingredient.amount,
+                            unit = ingredient.unit
+                        )
+                    }
+
+                    withContext(Dispatchers.IO) {
+                        ingredientDao.insertIngredients(ingredients)
+                    }
+                }
+
+                if (!stepsExist) {
+                    val steps = response.analyzedInstructions.flatMap { instruction ->
+                        instruction.steps.map { step ->
+                            CookingStepEntity(
+                                dishId = response.id,
+                                stepNumber = step.number,
+                                description = step.step
+                            )
+                        }
+                    }
+                    withContext(Dispatchers.IO) {
+                        cookingStepDao.insertCookingSteps(steps)
+                    }
+                }
             }
         }
     }
+
+
 
 
     suspend fun getDishCount(): Int {
@@ -114,5 +128,23 @@ class DishRepository(
     suspend fun isDishSaved(dishId: Long): Boolean {
         return savedDishDao.isDishSaved(dishId) > 0
     }
+
+    suspend fun isDishinShoppinglist(dishId: Long): Boolean {
+        return shoppingListDao.isDishSaved(dishId) > 0
+    }
+
+
+    suspend fun saveIngredientsToShoppingList(ingredients: List<IngredientEntity>, dishId: Int) {
+        val shoppingListItems = ingredients.map { ingredient ->
+            ShoppingListItem(
+                dishId = dishId,
+                ingredientName = ingredient.name
+            )
+        }
+        withContext(Dispatchers.IO) {
+            shoppingListDao.insertShoppingListItems(shoppingListItems)
+        }
+    }
+
 
 }

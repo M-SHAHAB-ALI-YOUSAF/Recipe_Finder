@@ -27,7 +27,7 @@
         android:layout_marginTop="40dp"
         android:text="@string/Slogan"
         android:textColor="@color/black"
-        android:fontFamily="@font/logofont"
+        android:fontFamily="@font/productbold"
         android:textSize="30sp"
         android:textAlignment="center"/>
 
@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/getstart"
+            android:fontFamily="@font/productbold"
             android:padding="5dp"
             android:textColor="@color/black"
             android:background="@android:color/transparent"

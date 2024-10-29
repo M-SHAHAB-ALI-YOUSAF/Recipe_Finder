@@ -19,7 +19,11 @@
         android:id="@+id/nav_gallery"
         android:name="com.example.recipefinder.ui.gallery.GalleryFragment"
         android:label="@string/menu_saved"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/action_nav_gallery_to_showDishDetail"
+            app:destination="@id/showDishDetail" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_battery"
@@ -51,4 +55,9 @@
         android:name="com.example.recipefinder.ui.userprofile.UserProfileFragment"
         android:label="@string/userprofile"
         tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/nav_shopping"
+        android:name="com.example.recipefinder.ui.shoppinglist.ShoppingList"
+        android:label="@string/menu_shopping"
+        tools:layout="@layout/fragment_shopping_list" />
 </navigation>
