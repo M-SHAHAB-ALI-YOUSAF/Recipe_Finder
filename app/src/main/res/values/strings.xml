@@ -31,7 +31,7 @@
     <string name="step">Cooking Steps</string>
     <string name="Steps">Step 1\nStep 2\nStep 3\nStep 4\nStep 5\nStep 6\nStep 7\nStep 9\nStep 10</string>
     <string name="default_web_client_id">1234568xyz.apps.googleusercontent.com</string>
-    <string name="no_recipes_found">No recipes found</string>
+     <string name="no_recipes_found">No Recipes Found</string>
     <string name="no_recipes_foundinfavorite">No Dish Found in Favorite</string>
     <string name="no_item">No Item Found in Shopping List</string>
 
@@ -57,6 +57,6 @@
     <string name="dinner">Dinner</string>
     <string name="mid_morning_snacks">Mid Morning Snacks</string>
     <string name="afternoon_snacks">Afternoon Snacks</string>
-    <string name="no_meal_plan_found_for_this_date">No meal plan found for this date</string>
+    <string name="no_meal_plan_found_for_this_date">No Meal Plan Found for this Date.</string>
 
 </resources>
