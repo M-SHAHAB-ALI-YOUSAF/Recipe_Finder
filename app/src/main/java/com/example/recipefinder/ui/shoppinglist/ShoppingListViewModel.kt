@@ -24,7 +24,7 @@ class ShoppingListViewModel(private val shoppingListDao: ShoppingListDao) : View
             val items = withContext(Dispatchers.IO) {
                 shoppingListDao.getAllShoppingListItems()
             }
-            _shoppingListItems.value = items
+            _shoppingListItems.postValue(items)
         }
     }
 
@@ -34,7 +34,6 @@ class ShoppingListViewModel(private val shoppingListDao: ShoppingListDao) : View
             fetchShoppingListItems()
         }
     }
-
 
     fun clearAllShoppingListItems() {
         viewModelScope.launch {

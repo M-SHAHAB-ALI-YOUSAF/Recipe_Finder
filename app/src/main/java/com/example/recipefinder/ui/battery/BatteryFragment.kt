@@ -41,7 +41,7 @@ class BatteryFragment : Fragment(R.layout.fragment_battery) {
     private fun observeBatteryInfo() {
         viewModel.batteryLevel.observe(viewLifecycleOwner) { batteryLevel ->
             binding.batteryProgress.setProgress(100 - batteryLevel)
-            if(batteryLevel > 50){
+            if (batteryLevel > 50) {
                 binding.tvBatteryLevel.setTextColor(Color.WHITE)
             }
             binding.tvBatteryLevel.text = "$batteryLevel%"
@@ -66,7 +66,10 @@ class BatteryFragment : Fragment(R.layout.fragment_battery) {
 
     override fun onResume() {
         super.onResume()
-        requireActivity().registerReceiver(batteryInfoReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        requireActivity().registerReceiver(
+            batteryInfoReceiver,
+            IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+        )
     }
 
     override fun onPause() {

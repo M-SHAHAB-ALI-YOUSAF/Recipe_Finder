@@ -12,9 +12,6 @@ interface ShoppingListDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertShoppingListItems(items: List<ShoppingListItem>)
 
-    @Query("SELECT * FROM shopping_list WHERE dishId = :dishId")
-    suspend fun getItemsForDish(dishId: Int): List<ShoppingListItem>
-
     @Query("DELETE FROM shopping_list WHERE ingredientName = :ingredientName")
     suspend fun deleteItemByIngredient(ingredientName: String)
 

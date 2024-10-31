@@ -23,13 +23,14 @@ class ShowDishDetailViewModel(private val repository: DishRepository) : ViewMode
             val cookingSteps = repository.getCookingStepsForDish(dishId)
             callback(cookingSteps)
         }
-     }
+    }
 
     fun saveDishId(dishId: Long) {
         viewModelScope.launch {
             repository.saveDishId(dishId)
         }
     }
+
     suspend fun isDishSaved(dishId: Long): Boolean {
         return withContext(Dispatchers.IO) {
             repository.isDishSaved(dishId)

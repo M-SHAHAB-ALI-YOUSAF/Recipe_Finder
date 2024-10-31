@@ -3,7 +3,9 @@ package com.example.recipefinder
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -38,27 +40,55 @@ class HomeScreen : AppCompatActivity() {
         val bindingHeader = NavHeaderHomeScreenBinding.bind(header)
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null) {
-            // Set the user's name, email, and profile picture in the header
             bindingHeader.UserName.text = user.displayName ?: "Name not available"
             user.photoUrl?.let {
-                Glide.with(this).load(it).placeholder(R.drawable.loading).error(R.drawable.error).into(bindingHeader.imageView)
+                Glide.with(this).load(it).placeholder(R.drawable.loading).error(R.drawable.error)
+                    .into(bindingHeader.imageView)
             }
         }
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_home,R.id.nav_User, R.id.nav_gallery, R.id.nav_shopping, R.id.nav_battery, R.id.nav_logout), drawerLayout
+            setOf(
+                R.id.nav_home,
+                R.id.nav_User,
+                R.id.nav_gallery,
+                R.id.nav_shopping,
+                R.id.nav_meal_planner,
+                R.id.nav_battery,
+                R.id.nav_logout
+            ), drawerLayout
         )
 
         navView.setupWithNavController(navController)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             fragmentNameTextView.text = destination.label
+
+
+            if (destination.id == R.id.addMealTopPan) {
+                binding.appBarHomeScreen.drawerImage.visibility = View.GONE
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+            } else {
+                binding.appBarHomeScreen.drawerImage.visibility = View.VISIBLE
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            }
         }
 
         navView.setNavigationItemSelectedListener { menuItem ->
 
             if (menuItem.itemId == R.id.nav_logout) {
-                signOutUser()
-                drawerLayout.close() // Close drawer after selecting item
+                AlertDialog.Builder(this)
+                    .setTitle("Logout")
+                    .setMessage("Are you sure you want to log out?")
+                    .setPositiveButton("Yes") { _, _ ->
+                        signOutUser()
+                        drawerLayout.close()
+                    }
+                    .setNegativeButton("No") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .show()
                 true
             } else {
                 navController.navigate(menuItem.itemId)

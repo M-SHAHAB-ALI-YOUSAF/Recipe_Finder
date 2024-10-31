@@ -21,4 +21,8 @@ interface DishDao {
 
     @Query("SELECT * FROM dishes WHERE id IN (:ids)")
     suspend fun getDishesByIds(ids: List<Long>): List<Dish>
+
+    @Query("SELECT * FROM dishes WHERE title LIKE '%' || :query || '%'")
+    suspend fun searchDishes(query: String): List<Dish>
+
 }

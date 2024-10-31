@@ -35,6 +35,6 @@ class BatteryFragmentViewModel : ViewModel() {
         _batteryIsCharging.value = isCharging
         _batteryTemperature.value = temperature
         _batteryVoltage.value = voltage
-        _batteryTechnology.value = technology?:"Unknown"
+        _batteryTechnology.value = technology ?: "Unknown"
     }
 }

@@ -10,6 +10,7 @@ class HomeViewModelFactory(private val repository: DishRepository) : ViewModelPr
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(repository) as T
             }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class")
         }
     }

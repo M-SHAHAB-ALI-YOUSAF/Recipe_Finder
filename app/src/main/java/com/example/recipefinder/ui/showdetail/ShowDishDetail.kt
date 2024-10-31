@@ -1,6 +1,7 @@
 package com.example.recipefinder.ui.showdetail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -58,21 +59,35 @@ class ShowDishDetail : Fragment() {
         val cookingStepDao = AppDatabase.getDatabase(requireContext()).cookingStepDao()
         val savedDishDao = AppDatabase.getDatabase(requireContext()).savedDishDao()
         val shoppingListDao = AppDatabase.getDatabase(requireContext()).shoppingListDao()
+        val mealPlanDao = AppDatabase.getDatabase(requireContext()).mealPLanDao()
 
 
         if (dishId != null) {
             val viewModel =
-                ShowDishDetailViewModel(DishRepository(dishDao, ingredientDao, cookingStepDao, savedDishDao, shoppingListDao))
+                ShowDishDetailViewModel(
+                    DishRepository(
+                        dishDao,
+                        ingredientDao,
+                        cookingStepDao,
+                        savedDishDao,
+                        shoppingListDao,
+                        mealPlanDao
+                    )
+                )
 
             viewLifecycleOwner.lifecycleScope.launch {
                 val isSaved = withContext(Dispatchers.IO) {
                     viewModel.isDishSaved(dishId!!)
                 }
-                val isShopping= withContext(Dispatchers.IO) {
+                val isShopping = withContext(Dispatchers.IO) {
                     viewModel.isDishSavedinShopping(dishId!!)
                 }
                 if (isSaved) {
                     binding.addToFavorite.setImageResource(R.drawable.heart)
+                }
+                if (isShopping) {
+                    binding.addToShop.setImageResource(R.drawable.shopping)
+                    binding.addToShop.isClickable = false
                 }
 
                 binding.addToFavorite.setOnClickListener {
@@ -85,17 +100,26 @@ class ShowDishDetail : Fragment() {
                 }
 
                 binding.addToShop.setOnClickListener {
-                    if(!isShopping){
-                    dishId?.let { id ->
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            val ingredients = viewModel.getIngredients(id.toInt())
-                            viewModel.saveIngredientsToShoppingList(ingredients, id.toInt())
-                            Toast.makeText(requireContext(), "Ingredients added to shopping list!", Toast.LENGTH_SHORT).show()
+                    if (!isShopping) {
+                        dishId?.let { id ->
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                val ingredients = viewModel.getIngredients(id.toInt())
+                                viewModel.saveIngredientsToShoppingList(ingredients, id.toInt())
+                                binding.addToShop.setImageResource(R.drawable.shopping)
+                                binding.addToShop.isClickable = false
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Ingredients added to shopping list!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
-                    }
-                    }
-                    else{
-                        Toast.makeText(requireContext(), "Ingredients already in shopping list!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            requireContext(),
+                            "Ingredients already in shopping list!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
 
@@ -118,11 +142,13 @@ class ShowDishDetail : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val drawerImage = requireActivity().findViewById<ImageView>(R.id.drawer_image)
-        val fragmentNameTextView = requireActivity().findViewById<TextView>(R.id.fragment_name_text_view)
+        val fragmentNameTextView =
+            requireActivity().findViewById<TextView>(R.id.fragment_name_text_view)
 
         drawerImage.visibility = View.GONE
         fragmentNameTextView.visibility = View.GONE
     }
+
     private fun displayIngredients(ingredients: List<IngredientEntity>) {
         val ingredientList = ingredients.joinToString(separator = "\n") { it ->
             "${it.amount} ${it.unit} ${

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     tools:context=".ui.login.Login">
 
@@ -18,69 +18,66 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="2dp"
-        android:background="@android:color/black"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toStartOf="@id/signIn"
-        app:layout_constraintTop_toBottomOf="@id/image1"/>
-
-    <TextView
-        android:id="@+id/signIn"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/google"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/Signin"
-        android:textColor="@color/black"
-        android:textSize="14sp"
-        android:layout_marginBottom="30dp"
-        />
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:weightSum="12"
+        app:layout_constraintTop_toBottomOf="@+id/image1">
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="2dp"
-        android:background="@android:color/black"
-        android:layout_marginTop="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintStart_toEndOf="@id/signIn"
-        app:layout_constraintTop_toBottomOf="@id/image1"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:background="@color/black" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:text="@string/Signin"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="3"
+            android:background="@color/black" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/google"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_corners_background"
-        app:layout_constraintBottom_toTopOf="@id/bottomFB">
+        app:layout_constraintBottom_toTopOf="@id/bottomFB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/google"
-            android:padding="5dp"/>
+            android:padding="5dp"
+            android:src="@drawable/google" />
+
         <Button
             android:id="@+id/googleSignin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
             android:text="@string/google"
             android:textAllCaps="false"
-            android:padding="5dp"
-            android:textColor="@color/black"
-            android:background="@android:color/transparent"
-            />
+            android:textColor="@color/black" />
 
     </LinearLayout>
 
@@ -89,8 +86,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="20dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_corners_background"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"

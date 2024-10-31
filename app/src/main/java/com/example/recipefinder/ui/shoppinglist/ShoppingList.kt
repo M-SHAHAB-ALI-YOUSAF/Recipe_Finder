@@ -25,20 +25,15 @@ class ShoppingList : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentShoppingListBinding.inflate(inflater, container, false)
-
         val dao: ShoppingListDao = AppDatabase.getDatabase(requireContext()).shoppingListDao()
         val factory = ShoppingListViewModelFactory(dao)
-
-
         viewModel = ViewModelProvider(this, factory).get(ShoppingListViewModel::class.java)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Set up the RecyclerView
         adapter = ShoppingListAdapter(emptyList()) { item, isChecked ->
             item.copy(isChecked = isChecked).also { updatedItem ->
                 viewModel.updateItem(updatedItem)
@@ -49,10 +44,10 @@ class ShoppingList : Fragment() {
         binding.recyclerViewIngredients.adapter = adapter
 
         viewModel.shoppingListItems.observe(viewLifecycleOwner) { items ->
-            adapter.updateItems(items ?: emptyList()) // Handle null case
+            adapter.updateItems(items ?: emptyList())
+            binding.noItemsFound.visibility = if (items.isNullOrEmpty()) View.VISIBLE else View.GONE
         }
 
-        // Set up the Clear All button
         binding.clearAll.setOnClickListener {
             showClearAllConfirmationDialog()
         }
@@ -63,15 +58,10 @@ class ShoppingList : Fragment() {
             .setTitle("Clear All Items")
             .setMessage("Are you sure you want to clear all items from the shopping list?")
             .setPositiveButton("Yes") { _, _ ->
-                clearAllItems()
+                viewModel.clearAllShoppingListItems()
             }
             .setNegativeButton("No", null)
             .show()
-    }
-
-    private fun clearAllItems() {
-        viewModel.clearAllShoppingListItems()
-
     }
 
     override fun onDestroyView() {
@@ -79,3 +69,4 @@ class ShoppingList : Fragment() {
         _binding = null
     }
 }
+

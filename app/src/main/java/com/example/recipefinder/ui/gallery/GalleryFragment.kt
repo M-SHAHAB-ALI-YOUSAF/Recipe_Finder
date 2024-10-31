@@ -42,7 +42,8 @@ class GalleryFragment : Fragment() {
         savedDishDao = database.savedDishDao()
 
         val drawerImage = requireActivity().findViewById<ImageView>(R.id.drawer_image)
-        val fragmentNameTextView = requireActivity().findViewById<TextView>(R.id.fragment_name_text_view)
+        val fragmentNameTextView =
+            requireActivity().findViewById<TextView>(R.id.fragment_name_text_view)
         drawerImage?.visibility = View.VISIBLE
         fragmentNameTextView?.visibility = View.VISIBLE
 

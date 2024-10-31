@@ -22,19 +22,17 @@
         android:id="@+id/UserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/username"
-        android:textColor="@color/black"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:paddingBottom="@dimen/nav_header_vertical_spacing"
         android:layout_gravity="center"
         android:fontFamily="@font/productsansregular"
-        android:textSize="16sp"
-        />
+        android:hint="@string/username"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:paddingBottom="@dimen/nav_header_vertical_spacing"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@android:color/black"
-        />
+        android:background="@android:color/black" />
 
 </LinearLayout>

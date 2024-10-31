@@ -9,7 +9,7 @@
         android:id="@+id/nav_home"
         android:name="com.example.recipefinder.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_nav_home_to_showDishDetail"
             app:destination="@id/showDishDetail" />
@@ -19,7 +19,7 @@
         android:id="@+id/nav_gallery"
         android:name="com.example.recipefinder.ui.gallery.GalleryFragment"
         android:label="@string/menu_saved"
-        tools:layout="@layout/fragment_gallery" >
+        tools:layout="@layout/fragment_gallery">
         <action
             android:id="@+id/action_nav_gallery_to_showDishDetail"
             app:destination="@id/showDishDetail" />
@@ -34,7 +34,7 @@
         android:id="@+id/splashScreen"
         android:name="com.example.recipefinder.ui.splashscreen.SplashScreen"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/action_splashScreen_to_nav_home"
             app:destination="@id/nav_home" />
@@ -48,8 +48,7 @@
         android:id="@+id/showDishDetail"
         android:name="com.example.recipefinder.ui.showdetail.ShowDishDetail"
         android:label="fragment_show_dish_detail"
-        tools:layout="@layout/fragment_show_dish_detail" >
-    </fragment>
+        tools:layout="@layout/fragment_show_dish_detail"></fragment>
     <fragment
         android:id="@+id/nav_User"
         android:name="com.example.recipefinder.ui.userprofile.UserProfileFragment"
@@ -60,4 +59,18 @@
         android:name="com.example.recipefinder.ui.shoppinglist.ShoppingList"
         android:label="@string/menu_shopping"
         tools:layout="@layout/fragment_shopping_list" />
+    <fragment
+        android:id="@+id/nav_meal_planner"
+        android:name="com.example.recipefinder.ui.mealplanner.MealPlanner"
+        android:label="@string/menu_meal"
+        tools:layout="@layout/fragment_meal__planner">
+        <action
+            android:id="@+id/action_nav_meal_planner_to_addMealTopPan"
+            app:destination="@id/addMealTopPan" />
+    </fragment>
+    <fragment
+        android:id="@+id/addMealTopPan"
+        android:name="com.example.recipefinder.ui.mealplanner.addMealTopPan"
+        android:label="Meal Planner"
+        tools:layout="@layout/fragment_add_meal_top_pan" />
 </navigation>

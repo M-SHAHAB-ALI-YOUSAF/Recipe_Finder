@@ -2,27 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/dish_image"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
-        android:layout_height="100dp"
-        android:contentDescription="@string/app_name"/>
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/dish_name"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:fontFamily="@font/productsansregular"
+        android:freezesText="true"
         android:maxLines="1"
         android:singleLine="true"
-        android:layout_weight="1"
-        android:freezesText="true"
-        android:ellipsize="marquee"
-        android:textSize="16sp"
-        android:fontFamily="@font/productsansregular"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:textSize="12sp" />
 </LinearLayout>

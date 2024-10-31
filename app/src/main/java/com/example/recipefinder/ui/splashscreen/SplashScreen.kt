@@ -35,11 +35,11 @@ class SplashScreen : Fragment() {
 
         val currentUser = auth.currentUser
         binding.getStarted.setOnClickListener {
-        if (currentUser != null) {
-            val intent = Intent(requireContext(), HomeScreen::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        } else {
+            if (currentUser != null) {
+                val intent = Intent(requireContext(), HomeScreen::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            } else {
 
                 val loginFragment = Login()
                 parentFragmentManager.beginTransaction()

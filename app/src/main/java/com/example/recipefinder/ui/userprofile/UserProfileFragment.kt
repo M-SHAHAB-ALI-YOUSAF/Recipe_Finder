@@ -29,7 +29,8 @@ class UserProfileFragment : Fragment() {
             binding.UserName.text = user.displayName ?: "Name not available"
             binding.UserEmail.text = user.email ?: "Email not available"
             user.photoUrl?.let {
-                Glide.with(this).load(it).placeholder(R.drawable.loading).error(R.drawable.error).into(binding.userImage)
+                Glide.with(this).load(it).placeholder(R.drawable.loading).error(R.drawable.error)
+                    .into(binding.userImage)
             }
         }
 

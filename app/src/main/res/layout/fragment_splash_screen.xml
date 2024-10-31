@@ -10,49 +10,51 @@
         android:id="@+id/chief"
         android:layout_width="wrap_content"
         android:layout_height="350dp"
+        android:layout_marginTop="70dp"
         android:contentDescription="@string/app_name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/chief"
-        android:layout_marginTop="70dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/Slogan"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/chief"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
-        android:text="@string/Slogan"
-        android:textColor="@color/black"
+        android:layout_marginEnd="40dp"
         android:fontFamily="@font/productbold"
-        android:textSize="30sp"
-        android:textAlignment="center"/>
+        android:text="@string/Slogan"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chief" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="60dp"
         android:layout_marginStart="50dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_corners_background"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
         <Button
             android:id="@+id/getStarted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/getstart"
+            android:background="@android:color/transparent"
             android:fontFamily="@font/productbold"
             android:padding="5dp"
-            android:textColor="@color/black"
-            android:background="@android:color/transparent"
-            />
+            android:text="@string/getstart"
+            android:textColor="@color/black" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

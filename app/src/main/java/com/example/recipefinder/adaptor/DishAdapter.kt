@@ -1,6 +1,5 @@
 package com.example.recipefinder.adaptor
 
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.recipefinder.R
-import com.example.recipefinder.retrofit.Recipe
+import com.example.recipefinder.roomdb.Dish
 
-class DishAdapter : ListAdapter<Recipe, DishAdapter.DishViewHolder>(DishDiffCallback()) {
+class DishAdapter(private val onItemClick: (Dish) -> Unit) :
+    ListAdapter<Dish, DishAdapter.DishViewHolder>(DishDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DishViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_dish, parent, false)
@@ -21,30 +21,36 @@ class DishAdapter : ListAdapter<Recipe, DishAdapter.DishViewHolder>(DishDiffCall
     }
 
     override fun onBindViewHolder(holder: DishViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onItemClick)
     }
 
     class DishViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView = itemView.findViewById(R.id.dish_name)
         private val imageView: ImageView = itemView.findViewById(R.id.dish_image)
 
-        fun bind(recipe: Recipe) {
-            nameTextView.text = recipe.title
+        fun bind(dish: Dish, onItemClick: (Dish) -> Unit) {
+            nameTextView.text = dish.title
             Glide.with(itemView.context)
-                .load(recipe.image)
+                .load(dish.image)
                 .placeholder(R.drawable.loading)
                 .error(R.drawable.error)
                 .into(imageView)
+
+
+            itemView.setOnClickListener {
+                onItemClick(dish)
+            }
         }
     }
 
-    class DishDiffCallback : DiffUtil.ItemCallback<Recipe>() {
-        override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
+    class DishDiffCallback : DiffUtil.ItemCallback<Dish>() {
+        override fun areItemsTheSame(oldItem: Dish, newItem: Dish): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
+        override fun areContentsTheSame(oldItem: Dish, newItem: Dish): Boolean {
             return oldItem == newItem
         }
     }
 }
+

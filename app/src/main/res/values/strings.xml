@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Recipe Finder</string>
-    <string name="Slogan">Discover all the best \n recipes you needed</string>
+    <string name="Slogan">Discover all the best recipes you needed</string>
     <string name="getstart">Get Started</string>
     <string name="title_activity_home_screen">HomeScreen</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -15,6 +15,7 @@
     <string name="menu_battery">Battery</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_shopping">Shopping List</string>
+    <string name="menu_meal">Meal Plan</string>
 
     <string name="Signin">Sign In</string>
     <string name="google">Continue with Google</string>
@@ -22,7 +23,7 @@
     <string name="facebook_app_id">513723088299977</string>
     <string name="fb_login_protocol_scheme">fb513723088299977</string>
     <string name="facebook_client_token">1b30d880ba3b848da1be9893d8fced38</string>
-    <string name="cuisine">Cuisine</string>
+    <string name="cuisine">Dishes</string>
     <string name="food">Food Name</string>
     <string name="ingredient">Ingredients</string>
     <string name="items">Ingredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \nIngredient \n</string>
@@ -32,6 +33,7 @@
     <string name="default_web_client_id">857228908716-cc9ribl2qrl89c8qkkgqllq0ii487rln.apps.googleusercontent.com</string>
     <string name="no_recipes_found">No recipes found</string>
     <string name="no_recipes_foundinfavorite">No Dish Found in Favorite</string>
+    <string name="no_item">No Item Found in Shopping List</string>
 
     <string name="battery_information">Battery Information</string>
     <string name="_50">50%</string>
@@ -49,5 +51,12 @@
     <string name="username">Ahmed Khan</string>
     <string name="email">Email123@gmail.com</string>
     <string name="userprofile">Profile</string>
+    <string name="select_date">Select Date:</string>
+    <string name="breakfast">BreakFast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
+    <string name="mid_morning_snacks">Mid Morning Snacks</string>
+    <string name="afternoon_snacks">Afternoon Snacks</string>
+    <string name="no_meal_plan_found_for_this_date">No meal plan found for this date</string>
 
 </resources>

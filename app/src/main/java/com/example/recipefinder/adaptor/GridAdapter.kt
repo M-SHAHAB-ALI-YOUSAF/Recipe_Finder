@@ -36,7 +36,8 @@ class GridAdapter(
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val view: View = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_dish_grid, parent, false)
+        val view: View = convertView ?: LayoutInflater.from(context)
+            .inflate(R.layout.item_dish_grid, parent, false)
 
         val dish = getItem(position)
 

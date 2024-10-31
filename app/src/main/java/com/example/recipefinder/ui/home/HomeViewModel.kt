@@ -12,6 +12,8 @@ class HomeViewModel(private val repository: DishRepository) : ViewModel() {
 
     private val _dishesFetchCompleted = MutableLiveData<Boolean>()
     val dishesFetchCompleted: LiveData<Boolean> get() = _dishesFetchCompleted
+    private val _searchResults = MutableLiveData<List<Dish>>()
+    val searchResults: LiveData<List<Dish>> get() = _searchResults
 
     fun fetchAndSaveDishes(cuisines: List<String>) {
         viewModelScope.launch {
@@ -25,6 +27,7 @@ class HomeViewModel(private val repository: DishRepository) : ViewModel() {
             repository.fetchAndSaveIngredientsAndSteps()
         }
     }
+
     suspend fun getDishCount(): Int {
         return repository.getDishCount()
     }
@@ -32,4 +35,12 @@ class HomeViewModel(private val repository: DishRepository) : ViewModel() {
     suspend fun getAllDishes(): List<Dish> {
         return repository.getAllDishes()
     }
+
+    fun searchDishesAndIngredients(query: String) {
+        viewModelScope.launch {
+            val dishes = repository.searchDishesAndIngredients(query)
+            _searchResults.value = dishes
+        }
+    }
+
 }

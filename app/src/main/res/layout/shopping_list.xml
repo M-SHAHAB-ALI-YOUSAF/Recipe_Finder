@@ -17,5 +17,5 @@
         android:layout_marginStart="8dp"
         android:fontFamily="@font/productsansregular"
         android:textColor="@color/black"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 </LinearLayout>

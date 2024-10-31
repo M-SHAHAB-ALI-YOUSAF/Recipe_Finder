@@ -13,11 +13,14 @@ class ShoppingListAdapter(
     private val onItemCheckedChange: (ShoppingListItem, Boolean) -> Unit
 ) : RecyclerView.Adapter<ShoppingListAdapter.ShoppingListViewHolder>() {
 
-    inner class ShoppingListViewHolder(private val binding: ShoppingListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ShoppingListViewHolder(private val binding: ShoppingListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ShoppingListItem) {
+            binding.ingredientCheckbox.setOnCheckedChangeListener(null)
             binding.ingredientCheckbox.isChecked = item.isChecked
             binding.ingredientName.text = item.ingredientName
-
+            binding.ingredientName.text =
+                item.ingredientName.replaceFirstChar { it.uppercaseChar() }
             binding.ingredientName.paint.isStrikeThruText = item.isChecked
 
             binding.ingredientCheckbox.setOnCheckedChangeListener { _, isChecked ->
@@ -27,7 +30,8 @@ class ShoppingListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingListViewHolder {
-        val binding = ShoppingListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ShoppingListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ShoppingListViewHolder(binding)
     }
 
