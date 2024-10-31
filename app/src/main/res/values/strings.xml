@@ -20,9 +20,9 @@
     <string name="Signin">Sign In</string>
     <string name="google">Continue with Google</string>
     <string name="fb">Continue with Facebook</string>
-    <string name="facebook_app_id">513723088299977</string>
-    <string name="fb_login_protocol_scheme">fb513723088299977</string>
-    <string name="facebook_client_token">1b30d880ba3b848da1be9893d8fced38</string>
+    <string name="facebook_app_id">1234</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
     <string name="cuisine">Dishes</string>
     <string name="food">Food Name</string>
     <string name="ingredient">Ingredients</string>
@@ -30,7 +30,7 @@
     <string name="amount">Ingredient Amount</string>
     <string name="step">Cooking Steps</string>
     <string name="Steps">Step 1\nStep 2\nStep 3\nStep 4\nStep 5\nStep 6\nStep 7\nStep 9\nStep 10</string>
-    <string name="default_web_client_id">857228908716-cc9ribl2qrl89c8qkkgqllq0ii487rln.apps.googleusercontent.com</string>
+    <string name="default_web_client_id">1234568xyz.apps.googleusercontent.com</string>
     <string name="no_recipes_found">No recipes found</string>
     <string name="no_recipes_foundinfavorite">No Dish Found in Favorite</string>
     <string name="no_item">No Item Found in Shopping List</string>
